@@ -1,0 +1,64 @@
+generator satriaClient {
+  provider = "prisma-client-js"
+  output   = "../prisma/generated/satria-client"
+}
+
+datasource satria {
+  provider = "sqlserver"
+  url      = env("DATABASE_URL_SATRIA")
+}
+
+model User {
+  id              Int       @id(map: "PK_users") @default(autoincrement())
+  name            String    @satria.VarChar(255)
+  email           String    @satria.VarChar(100)
+  password        String    @satria.VarChar(255)
+  email_sf        String    @satria.VarChar(100)
+  personal_number String    @satria.VarChar(25)
+  department      String    @satria.VarChar(255)
+  division        String    @satria.VarChar(255)
+  company_name    String    @satria.VarChar(255)
+  is_active       Int
+  created_at      DateTime  @satria.DateTime
+  updated_at      DateTime? @satria.DateTime
+
+  @@map("users")
+}
+
+model apps_menu {
+  id         Int       @id(map: "PK_apps_menu") @default(autoincrement())
+  topmain    String?   @satria.VarChar(64)
+  main       String?   @satria.VarChar(64)
+  menu       String    @satria.VarChar(64)
+  link       String    @satria.VarChar(64)
+  icon       String    @satria.VarChar(64)
+  flag       Int
+  created_by Int
+  created_at DateTime  @satria.DateTime
+  updated_by Int?
+  updated_at DateTime? @satria.DateTime
+}
+
+model permission_group_menu {
+  id         Int       @id(map: "PK_permission_group_menu") @default(autoincrement())
+  group      Int?
+  menu       Int?
+  access     Int?
+  c          Int
+  r          Int
+  u          Int
+  d          Int
+  v          Int
+  created_at DateTime  @satria.DateTime
+  updated_at DateTime? @satria.DateTime
+}
+
+model role_group {
+  id         Int       @id(map: "PK_role_group") @default(autoincrement())
+  name       String    @satria.VarChar(64)
+  flag       Int
+  created_by Int
+  created_at DateTime  @satria.DateTime
+  updated_by Int?
+  updated_at DateTime? @satria.DateTime
+}
